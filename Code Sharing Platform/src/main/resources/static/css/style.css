@@ -1,0 +1,35 @@
+:root {
+    --black-color: #333;
+    color: var(--black-color);
+    font-family: Verdana, sans-serif;
+    font-size: 16px;
+}
+
+#error {
+    font-size: 0.8rem;
+    color: red;
+    margin-bottom: 0.5rem;
+}
+
+#load_date {
+    color: green;
+}
+
+#code_snippet {
+    width: 60rem;
+    resize: vertical;
+    border: 1px solid darkgray;
+    margin-top: 0!important;
+}
+
+[id$="restriction"] {
+    font-style: italic;
+}
+
+.code-box {
+    margin-bottom: 1.5rem;
+}
+
+.field {
+    margin-bottom: 0.5rem;
+}

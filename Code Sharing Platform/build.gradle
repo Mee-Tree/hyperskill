@@ -1,0 +1,47 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.3.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+	maven { url "https://jitpack.io" }
+}
+
+dependencies {
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	compile 'org.springframework.boot:spring-boot-starter-freemarker'
+
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	runtimeOnly 'com.h2database:h2'
+
+	testCompile group: 'junit', name: 'junit', version: '4.12'
+	testCompile 'com.google.code.gson:gson:2.8.5'
+	testCompile 'org.apache.httpcomponents:httpclient:4.5.9'
+
+	testImplementation 'com.github.hyperskill:hs-test:release-SNAPSHOT'
+	testImplementation 'org.jsoup:jsoup:1.13.1'
+}
+
+
+test {
+	systemProperty "file.encoding", "utf-8"
+	outputs.upToDateWhen { false }
+	afterTest { TestDescriptor test, TestResult result ->
+		if (result.resultType == TestResult.ResultType.FAILURE) {
+			def message = result.exception?.message ?: "Wrong answer"
+			def lines = message.readLines()
+			println "#educational_plugin FAILED + " + lines[0]
+			lines[1..-1].forEach { line ->
+				println "#educational_plugin" + line
+			}
+		}
+	}
+}
